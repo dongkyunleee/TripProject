@@ -1,10 +1,13 @@
 @import './base.css';
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+  width: 100%;
+  /*max-width: none;*/
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 a,
@@ -15,21 +18,112 @@ a,
   padding: 3px;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+a:hover {
+  background-color: hsla(160, 100%, 37%, 0.2);
+}
+
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+header {
+  width: 100%;
+  background: linear-gradient(to right, #3498db, #2ecc71);
+  color: #ffffff;
+  padding: 10px 40px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+header .header-container {
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+header .logo h1 {
+  font-size: 1.8rem;
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+}
+
+header .menu {
+  display: flex;
+  gap: 20px;
+}
+
+header .menu a {
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 15px;
+  transition: background-color 0.3s;
+}
+
+header .menu a:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+header .search-bar input {
+  padding: 8px 12px;
+  border-radius: 15px;
+  border: none;
+  font-size: 1rem;
+  width: 250px;
+  outline: none;
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  color: #2c3e50;
+  text-align: center;
+  margin-top: 20px;
+}
+
+p {
+  font-size: 1.2rem;
+  line-height: 1.5;
 }
 
 @media (min-width: 1024px) {
   body {
     display: flex;
-    place-items: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
   }
 
   #app {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+    grid-template-columns: 1fr 3fr;
+    gap: 1.5rem;
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  #app {
+    padding: 1rem;
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  p {
+    font-size: 1rem;
   }
 }

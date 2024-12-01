@@ -4,7 +4,7 @@
       <h1>TravelProject</h1>
     </div>
     <nav class="menu">
-      <a href="#">Home</a>
+      <router-link to="/home">Home</router-link>
       <a href="#">Destinations</a>
       <a href="#">About</a>
     </nav>
@@ -13,7 +13,9 @@
     </div>
   </header>
 </template>
+<script>
 
+</script>
 
 <style scoped>
 .header {

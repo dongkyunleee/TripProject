@@ -1,32 +1,28 @@
 <template>
   <div class="page-container">
     <Header />
-      <div class="destination-list">
-        <DestinationCard
-            v-for="destination in popularDestinations"
-            :key="destination.id"
-            :image="destination.image"
-            :title="destination.title"
-            :description="destination.description"
-        />
-      </div>
+        <div class = "destination-list" v-for="destination in popularDestinations" :key="destination.id">
+          <DestinationCard
+              :image="destination.image"
+              :title="destination.title"
+              :description="destination.description"
+              @click="onClick(destination.id)"
+          />
+        </div>
     <Footer />
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import {onMounted, ref} from "vue";
 import DestinationCard from "@/components/DestinationCard.vue";
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import parisImage from "@/assets/image/paris.jpg";
 import newYorkImage from "@/assets/image/NewYork.jpg";
+import router from '@/router/index.js'
 
-export default {
-  name: "HomePage",
-  components: { Header, Footer, DestinationCard },
-  setup() {
-    const popularDestinations = ref([
+const popularDestinations = ref([
       { id: 1, image: parisImage, title: "Paris", description: "The city of lights." },
       { id: 2, image: newYorkImage, title: "New York", description: "A Great City" },
       { id: 3, image: newYorkImage, title: "New York", description: "A Great City" },
@@ -42,11 +38,11 @@ export default {
       { id: 13, image: newYorkImage, title: "New York", description: "A Great City" },
     ]);
 
-    return {
-      popularDestinations,
-    };
-  },
+const onClick = id => {
+  router.push(`/destinationDetail/${id}`);
 };
+
+
 </script>
 
 <style scoped>

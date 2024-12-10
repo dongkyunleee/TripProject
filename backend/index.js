@@ -66,6 +66,42 @@ app.post('/api/login', (req, res) => {
     });
 });
 
+app.post('/api/signup', (req, res) => {
+    console.log("req.body:", res.body);
+
+    const { username, password, email } = req.body;
+
+    // 필수 데이터 확인
+    if (!username || !password || !email) {
+        return res.status(400).json({ message: '아이디, 비밀번호, 이메일을 모두 입력하세요.' });
+    }
+
+    // 아이디 중복 확인
+    const checkQuery = 'SELECT * FROM login WHERE username = ?';
+    db.query(checkQuery, [username], (err, results) => {
+        if (err) {
+            console.error('DB Query Error:', err);
+            return res.status(500).json({ message: '서버 오류' });
+        }
+
+        if (results.length > 0) {
+            return res.status(409).json({ message: '이미 존재하는 아이디입니다.' });
+        }
+
+        // 사용자 정보 삽입
+        const insertQuery = 'INSERT INTO login (username, password, email) VALUES (?, ?, ?)';
+        db.query(insertQuery, [username, password, email], (err, result) => {
+            if (err) {
+                console.error('DB Insert Error:', err);
+                return res.status(500).json({ message: '회원가입에 실패했습니다. 다시 시도해주세요.' });
+            }
+
+            console.log('회원가입 성공:', result);
+            res.status(201).json({ message: '회원가입 성공' });
+        });
+    });
+});
+
 // 서버 시작
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

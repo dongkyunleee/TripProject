@@ -10,7 +10,7 @@
     </label>
     <div class="button-group">
       <button @click="submit" class="btn btn-primary">로그인</button>
-      <button @click="test" class="btn btn-secondary">회원가입</button>
+      <button @click="signuppage" class="btn btn-secondary">회원가입</button>
     </div>
   </div>
 </template>
@@ -18,7 +18,6 @@
 <script>
 import axios from "axios";
 import { reactive } from "vue";
-import {useRouter} from "vue-router";
 export default {
   name: "App",
   components: {},
@@ -69,7 +68,7 @@ export default {
           });
     };
 
-    return { state, submit };
+    return { state, submit ,signuppage};
   },
 };
 </script>

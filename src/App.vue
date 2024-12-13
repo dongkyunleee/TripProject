@@ -12,7 +12,8 @@ export default {
     HomePage,
     Login,
     Signup,
-    Swiper
+    Swiper,
+
   },
 };
 </script>

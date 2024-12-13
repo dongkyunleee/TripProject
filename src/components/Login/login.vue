@@ -11,6 +11,7 @@
     <div class="button-group">
       <button @click="submit" class="btn btn-primary">로그인</button>
       <button @click="signuppage" class="btn btn-secondary">회원가입</button>
+      <button @click="kakaoLogin" class="btn btn-third">카카오로그인</button>
     </div>
   </div>
 </template>
@@ -28,36 +29,72 @@ export default {
         password: "",
       },
     });
+
+    // 카카오 로그인 처리 함수
+    const kakaoLogin = () => {
+      if (!window.Kakao.isInitialized()) {
+        alert("카카오 SDK가 초기화되지 않았습니다.");
+        return;
+      }
+
+      // 카카오 로그인 팝업
+      window.Kakao.Auth.login({
+        success: function (authObj) {
+          console.log("카카오 로그인 성공:", authObj);
+
+          // 로그인 후, 사용자 정보 요청
+          window.Kakao.API.request({
+            url: '/v2/user/me',
+            success: function (response) {
+              console.log("사용자 정보:", response);
+              alert(`로그인 성공! 환영합니다, ${response.kakao_account.profile.nickname}`);
+              // 여기서 받은 사용자 정보를 서버에 전달하거나, localStorage에 저장할 수 있습니다.
+            },
+            fail: function (error) {
+              console.error("사용자 정보 요청 실패:", error);
+            },
+          });
+        },
+        fail: function (err) {
+          console.error("카카오 로그인 실패:", err);
+          alert("카카오 로그인에 실패했습니다.");
+        },
+      });
+    };
+
+    // 일반 로그인 처리 함수
     const submit = () => {
       const loginObj = {
         username: state.form.username,
         password: state.form.password,
       };
-      console.log("loginObjloginObj",loginObj)
-      axios.post("http://localhost:3000/api/login", loginObj).then((res) => {
-        console.log(res);
-        alert("로그인 성공");
-        let token = res.data.token;
-        localStorage.setItem("token", token);
-        let config = {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        };
-        axios
-            .get("/api/user/admin", config)
-            .then((response) => {
-              console.log(response);
-              let userInfo = {
-                nickname: response.data.nickname,
-                username: response.data.username,
-              };
-              console.log(userInfo);
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-      })
+      console.log("loginObj", loginObj);
+      axios
+          .post("http://localhost:3000/api/login", loginObj)
+          .then((res) => {
+            console.log(res);
+            alert("로그인 성공");
+            let token = res.data.token;
+            localStorage.setItem("token", token);
+            let config = {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            };
+            axios
+                .get("/api/user/admin", config)
+                .then((response) => {
+                  console.log(response);
+                  let userInfo = {
+                    nickname: response.data.nickname,
+                    username: response.data.username,
+                  };
+                  console.log(userInfo);
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+          })
           .catch((error) => {
             if (error.response && error.response.status === 401) {
               alert("로그인 실패: 아이디 또는 비밀번호가 올바르지 않습니다.");
@@ -68,7 +105,7 @@ export default {
           });
     };
 
-    return { state, submit ,signuppage};
+    return { state, submit, kakaoLogin };
   },
 };
 </script>

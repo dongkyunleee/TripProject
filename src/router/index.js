@@ -14,11 +14,11 @@ const routes = [
         name: 'Home',
         component: HomePage,
     },
-    // {
-    //     path: '/Login',
-    //     name: 'login',
-    //     component: Login,
-    // },
+    {
+        path: '/Login',
+        name: 'login',
+        component: Login,
+    },
     {
         path: '/Signup',
         name: 'signup',

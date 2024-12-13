@@ -58,7 +58,7 @@ align-items: center;
 
 .swiper-slide img {
 display: block;
-width: 100%;
+width: 50%;
 height: 100%;
 object-fit: cover;
 }

@@ -65,7 +65,7 @@ app.post('/api/login', (req, res) => {
         });
     });
 });
-
+// 회원가입 처리 (Insert 작업)
 app.post('/api/signup', (req, res) => {
     console.log("req.body:", res.body);
 

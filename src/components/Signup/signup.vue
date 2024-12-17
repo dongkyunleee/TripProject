@@ -34,6 +34,7 @@
 <script>
 import { reactive } from "vue";
 import axios from "axios";
+import router from "@/router/index.js";
 
 export default {
   name: "Signup",
@@ -57,6 +58,7 @@ export default {
             console.log(res);
             alert("회원가입 성공!");
           })
+          router.push('/login')
           .catch((err) => {
             console.error(err);
             alert("회원가입에 실패했습니다. 다시 시도해주세요.");

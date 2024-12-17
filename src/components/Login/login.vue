@@ -17,11 +17,12 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios, {all} from "axios";
 import { reactive } from "vue";
+import router from "@/router/index.js";
+
 export default {
-  name: "App",
-  components: {},
+  name: "Login",
   setup() {
     const state = reactive({
       form: {
@@ -37,18 +38,16 @@ export default {
         return;
       }
 
-      // 카카오 로그인 팝업
       window.Kakao.Auth.login({
         success: function (authObj) {
           console.log("카카오 로그인 성공:", authObj);
-
-          // 로그인 후, 사용자 정보 요청
           window.Kakao.API.request({
             url: '/v2/user/me',
             success: function (response) {
               console.log("사용자 정보:", response);
               alert(`로그인 성공! 환영합니다, ${response.kakao_account.profile.nickname}`);
-              // 여기서 받은 사용자 정보를 서버에 전달하거나, localStorage에 저장할 수 있습니다.
+              router.push("/home");
+              // 카카오 로그인 후 토큰을 localStorage에 저장하거나 다른 처리를 할 수 있습니다.
             },
             fail: function (error) {
               console.error("사용자 정보 요청 실패:", error);
@@ -70,29 +69,41 @@ export default {
       };
       console.log("loginObj", loginObj);
       axios
-          .post("http://localhost:3000/api/login", loginObj)
+          .post("http://localhost:3000/api/login", loginObj) // 로그인 요청
           .then((res) => {
-            console.log(res);
+            console.log("로그인 응답:", res);
             alert("로그인 성공");
-            let token = res.data.token;
-            localStorage.setItem("token", token);
-            let config = {
+            router.push("/home"); // 홈 화면으로 이동
+
+            const token = res.data.token; // 서버에서 받은 JWT 토큰
+            console.log("tokentoken", token);
+
+            localStorage.setItem("token", token); // JWT 토큰을 localStorage에 저장
+            console.log("localStoragelocalStorage", localStorage.getItem("token"));
+
+            // 로그인 후 사용자 정보 요청
+            const config = {
               headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${token}`, // Authorization 헤더에 JWT 토큰 포함
               },
             };
+
+            console.log("configconfigconfigconfig", config);
+
+            // 이 부분에서 .get을 사용해야 함 (POST가 아님)
             axios
-                .get("/api/user/admin", config)
-                .then((response) => {
-                  console.log(response);
+                .get("http://localhost:3000/api/user", config) // 사용자 정보 요청 API
+                .then((res) => {
+                  console.log("User Info:", res.data);
+                  // 사용자 정보를 로컬 스토리지에 저장하거나 Vuex 상태로 관리
                   let userInfo = {
-                    nickname: response.data.nickname,
-                    username: response.data.username,
+                    username: res.data.username,
                   };
-                  console.log(userInfo);
+                  // 사용자 정보 저장 (예: localStorage나 Vuex 등)
+                  localStorage.setItem("userInfo", JSON.stringify(userInfo));
                 })
                 .catch((error) => {
-                  console.log(error);
+                  console.error("Error fetching user info:", error);
                 });
           })
           .catch((error) => {

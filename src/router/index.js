@@ -3,21 +3,22 @@ import HomePage from '../components/Home/HomePage.vue';
 import Login from '../components/Login/login.vue';
 import Signup from "@/components/Signup/signup.vue";
 import Swiper from "@/components/Swiper.vue";
+import mypage from "@/components/Mypage/mypage.vue";
 const routes = [
     {
         path: '/',
-        // redirect: '/home',
+         name: '/login',
         redirect: '/login',
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: () => import('../components/Login/login.vue'), // 동적 import
     },
     {
         path: '/home',
         name: 'Home',
         component: HomePage,
-    },
-    {
-        path: '/Login',
-        name: 'login',
-        component: Login,
     },
     {
         path: '/Signup',
@@ -28,6 +29,11 @@ const routes = [
         path: '/Swiper',
         name: 'swiper',
         component: Swiper,
+    },
+    {
+        path: '/Mypage',
+        name: 'mypage',
+        component: mypage,
     },
 ];
 

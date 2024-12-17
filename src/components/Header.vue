@@ -8,13 +8,68 @@
       <a href="#">Destinations</a>
       <a href="#">About</a>
     </nav>
+    <!-- 로그인 후 사용자 정보 표시 -->
+    <div v-if="user.isLoggedIn" class="user-info">
+      <span>Welcome, {{ user.nickname }}!</span>
+      <button @click="logout">Logout</button>
+    </div>
     <div class="search-bar">
       <input type="text" placeholder="검색" />
     </div>
   </header>
 </template>
-<script>
 
+<script>
+import {reactive, onMounted} from 'vue';
+import axios from 'axios';
+
+export default {
+  name: 'Header',
+  setup() {
+    // 로그인 상태와 사용자 정보 관리
+    const user = reactive({
+      isLoggedIn: false,
+      nickname: '',
+    });
+
+    // 로그인 상태 및 사용자 정보 확인
+    const checkLoginStatus = () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        // 토큰이 존재하면 사용자 정보 요청
+        axios
+            .get('http://localhost:3000/api/user', {
+              headers: {Authorization: `Bearer ${token}`},
+            })
+            .then((response) => {
+              // 사용자 정보를 받아오면 로그인 상태를 true로 설정
+              user.isLoggedIn = true;
+              user.nickname = response.data.username; // 백엔드에서 응답한 nickname
+            })
+            .catch((error) => {
+              console.error('Error fetching user info:', error);
+            });
+      }
+    };
+
+    // 로그아웃 처리
+    const logout = () => {
+      localStorage.removeItem('token'); // 토큰 삭제
+      user.isLoggedIn = false; // 로그인 상태 초기화
+      user.nickname = ''; // 사용자 정보 초기화
+    };
+
+    // 컴포넌트가 마운트될 때 로그인 상태를 확인
+    onMounted(() => {
+      checkLoginStatus();
+    });
+
+    return {
+      user,
+      logout,
+    };
+  },
+};
 </script>
 
 <style scoped>
@@ -34,7 +89,6 @@
 
 .logo h1 {
   font-size: 1.5rem;
-  //font-family: 'Montserrat', sans-serif;
   margin-bottom: 10px;
   margin-right: 60px;
 }
@@ -68,6 +122,3 @@
   outline: none;
 }
 </style>
-
-
-

@@ -22,6 +22,7 @@
 <script>
 import {reactive, onMounted} from 'vue';
 import axios from 'axios';
+import router from "@/router/index.js";
 
 export default {
   name: 'Header',
@@ -57,6 +58,8 @@ export default {
       localStorage.removeItem('token'); // 토큰 삭제
       user.isLoggedIn = false; // 로그인 상태 초기화
       user.nickname = ''; // 사용자 정보 초기화
+      alert("로그아웃 됐습니다. 재접속 부탁드리겠습니다.")
+      router.push("/login")
     };
 
     // 컴포넌트가 마운트될 때 로그인 상태를 확인

@@ -18,7 +18,7 @@ const routes = [
     {
         path: '/home',
         name: 'Home',
-        component: HomePage,
+        component: () => import("/src/components/Home/HomePage.vue"), // 동적 import
     },
     {
         path: '/Signup',

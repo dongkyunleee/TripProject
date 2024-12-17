@@ -26,6 +26,7 @@
       <div class="button-group">
         <button type="submit" class="btn btn-primary">회원가입</button>
         <button type="reset" class="btn btn-secondary">초기화</button>
+        <button type="button" class="btn btn-third" @click="goToLogin">로그인으로 돌아가기</button>
       </div>
     </form>
   </div>
@@ -35,6 +36,7 @@
 import { reactive } from "vue";
 import axios from "axios";
 import router from "@/router/index.js";
+import { useRouter } from "vue-router";
 
 export default {
   name: "Signup",
@@ -45,6 +47,8 @@ export default {
       password: "",
       confirmPassword: "",
     });
+
+    const router = useRouter();
 
     const submit = () => {
       if (form.password !== form.confirmPassword) {
@@ -65,9 +69,14 @@ export default {
           });
     };
 
+    const goToLogin = () => {
+      router.push("/login"); // 로그인 페이지로 이동
+    };
+
     return {
       form,
       submit,
+      goToLogin,
     };
   },
 };
@@ -152,12 +161,12 @@ body {
 }
 
 .btn-secondary {
-  background-color: #6c757d;
+  background-color: #ff0000;
   color: #fff;
 }
 
 .btn-secondary:hover {
-  background-color: #5a6268;
+  background-color: #ed2713;
   transform: scale(1.05);
 }
 

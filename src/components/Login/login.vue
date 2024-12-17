@@ -143,6 +143,8 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background: url('@/assets/image/travel-background.jpg') no-repeat center center fixed;
+  background-size: cover;
 }
 
 .login-container {
@@ -154,8 +156,6 @@ body {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   text-align: center;
   animation: fadeIn 0.8s ease-in-out;
-
-
 }
 
 .login-container h2 {

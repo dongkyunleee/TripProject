@@ -126,14 +126,23 @@ export default {
 
 <style>
 /* 컨테이너 스타일 */
-body {
+
+html, body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  height: 100%;
+}
+body {
+  font-family: 'Nunito', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #74b9ff, #a29bfe);
+}
+#app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .login-container {
@@ -144,6 +153,9 @@ body {
   border-radius: 10px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   text-align: center;
+  animation: fadeIn 0.8s ease-in-out;
+
+
 }
 
 .login-container h2 {
@@ -178,19 +190,21 @@ body {
 
 .button-group {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 15px;
   margin-top: 20px;
+  width: 100%;
 }
 
 .btn {
-  padding: 10px 15px;
-  font-size: 14px;
+  padding: 12px 20px;
+  font-size: 16px;
   font-weight: bold;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 100%;
 }
 
 .btn-primary {
@@ -204,18 +218,22 @@ body {
 }
 
 .btn-secondary {
-  background-color: #6c757d;
+  background-color:#ff0000 !important;
   color: #fff;
 }
 
 .btn-secondary:hover {
-  background-color: #5a6268;
+  background-color: #ed2713 !important;
   transform: scale(1.05);
 }
 
-/* 추가 애니메이션 효과 */
-.login-container {
-  animation: fadeIn 0.8s ease-in-out;
+.btn-third {
+  background-color: #FEE500;
+  color: #fff;
+}
+
+.btn-third:hover {
+  background-color: #FDD700;
 }
 
 @keyframes fadeIn {

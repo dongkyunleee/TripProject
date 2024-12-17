@@ -2,7 +2,15 @@
   <div class="page-container">
     <Header />
     <!-- Swiper 슬라이더 추가 -->
-    <swiper :pagination="true" :modules="modules" class="mySwiper">
+    <swiper
+        class="mySwiper"
+        :pagination="true"
+        :spaceBetween="20"
+        :slidesPerView="1"
+        :autoplay="{ delay: 7000 }"
+        :speed="2000"
+        :modules="modules"
+    >
       <swiper-slide v-for="(destination, index) in popularDestinations" :key="index">
         <img :src="destination.image" :alt="destination.title" />
         <div class="slide-content">
@@ -56,28 +64,37 @@ export default {
 </script>
 
 <style scoped>
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
 .page-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-}
-
-.destination-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
   width: 100%;
-  max-width: 1400px;
-  margin: 30px auto;
+  max-width: 100vw;
+  margin: 0 auto;
 }
 
+/* Swiper 슬라이더 */
 .mySwiper {
   width: 100%;
-  height: 300px;
-  margin: 20px 0;
+  height: 400px;
+  margin: 20px auto;
 }
 
-.swiper-slide {
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+swiper-slide {
   text-align: center;
   background: #fff;
   display: flex;
@@ -87,11 +104,28 @@ export default {
   padding: 20px;
 }
 
-.swiper-slide img {
+/* 작은 화면 (모바일 등) */
+@media (max-width: 768px) {
+  .mySwiper {
+    height: 300px;
+  }
+}
+
+/* 큰 화면 (데스크탑 등) */
+@media (min-width: 1024px) {
+  .mySwiper {
+    height: 500px;
+  }
+}
+
+/* 그리드 레이아웃 (destination 카드) */
+.destination-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 각 카드가 화면에 맞게 표시되도록 설정 */
+  gap: 30px;
   width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 10px;
+  max-width: 1400px;
+  margin: 30px auto;
 }
 
 .slide-content {

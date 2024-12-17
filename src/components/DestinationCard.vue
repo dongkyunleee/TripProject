@@ -1,5 +1,5 @@
 <template>
-  <div class="destination-card">
+  <div class="destination-card" @click="handleClick">
     <img :src="image" alt="Destination" />
     <h3>{{ title }}</h3>
     <p>{{ description }}</p>
@@ -12,6 +12,16 @@ export default {
     image: String,
     title: String,
     description: String,
+    id: Number,
+  },
+  setup(props, { emit }) {
+    const handleClick = () => {
+      emit('click', props.id);
+    };
+
+    return {
+      handleClick,
+    };
   },
 };
 </script>
@@ -36,6 +46,7 @@ export default {
   height: auto;
   border-radius: 10px;
   margin-bottom: 15px;
+  cursor:pointer;
 }
 
 .destination-card h3 {

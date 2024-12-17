@@ -4,6 +4,7 @@ import Login from '../components/Login/login.vue';
 import Signup from "@/components/Signup/signup.vue";
 import Swiper from "@/components/Swiper.vue";
 import mypage from "@/components/Mypage/mypage.vue";
+import DestinationDetail from "@/components/DestinationDetail.vue";
 const routes = [
     {
         path: '/',
@@ -29,6 +30,11 @@ const routes = [
         path: '/Swiper',
         name: 'swiper',
         component: Swiper,
+    },
+    {
+        path: '/DestinationDetail/:id',
+        name: 'DestinationDetail',
+        component: DestinationDetail,
     },
     {
         path: '/Mypage',

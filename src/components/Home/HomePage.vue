@@ -11,7 +11,7 @@
         :speed="2000"
         :modules="modules"
     >
-      <swiper-slide v-for="(destination, index) in popularDestinations" :key="index">
+      <swiper-slide v-for="(destination, index) in popularDestinations" :key="index" @click="goToDetail(destination.id)">
         <img :src="destination.image" :alt="destination.title" />
         <div class="slide-content">
           <h3>{{ destination.title }}</h3>
@@ -27,6 +27,7 @@
           :image="destination.image"
           :title="destination.title"
           :description="destination.description"
+          @click="goToDetail(destination.id)"
       />
     </div>
     <Footer />
@@ -44,20 +45,27 @@ import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import parisImage from "@/assets/image/paris.jpg";
 import newYorkImage from "@/assets/image/NewYork.jpg";
+import { useRouter } from 'vue-router';
 
 export default {
   name: "HomePage",
   components: { Header, Footer, DestinationCard, Swiper, SwiperSlide },
   setup() {
+    const router = useRouter();
     const popularDestinations = ref([
       { id: 1, image: parisImage, title: "Paris", description: "The city of lights." },
       { id: 2, image: newYorkImage, title: "New York", description: "A Great City" },
       // ... 나머지 destination들
     ]);
 
+    const goToDetail = (id) => {
+      router.push({name: 'DestinationDetail', params: {id}});
+    };
+
     return {
       popularDestinations,
       modules: [Pagination], // Swiper에서 사용하는 모듈 등록
+      goToDetail
     };
   },
 };
@@ -92,6 +100,7 @@ html, body {
   height: 100%;
   object-fit: contain;
   border-radius: 10px;
+  cursor:pointer;
 }
 
 swiper-slide {

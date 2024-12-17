@@ -10,8 +10,8 @@
     </nav>
     <!-- 로그인 후 사용자 정보 표시 -->
     <div v-if="user.isLoggedIn" class="user-info">
-      <span>Welcome, {{ user.nickname }}!</span>
-      <button @click="logout">Logout</button>
+      <span class="welcome-message">Welcome, {{ user.nickname }}!</span>
+      <button @click="logout" class="logout-btn">Logout</button>
     </div>
     <div class="search-bar">
       <input type="text" placeholder="검색" />
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import {reactive, onMounted} from 'vue';
+import { reactive, onMounted } from 'vue';
 import axios from 'axios';
 import router from "@/router/index.js";
 
@@ -40,7 +40,7 @@ export default {
         // 토큰이 존재하면 사용자 정보 요청
         axios
             .get('http://localhost:3000/api/user', {
-              headers: {Authorization: `Bearer ${token}`},
+              headers: { Authorization: `Bearer ${token}` },
             })
             .then((response) => {
               // 사용자 정보를 받아오면 로그인 상태를 true로 설정
@@ -58,8 +58,8 @@ export default {
       localStorage.removeItem('token'); // 토큰 삭제
       user.isLoggedIn = false; // 로그인 상태 초기화
       user.nickname = ''; // 사용자 정보 초기화
-      alert("로그아웃 됐습니다. 재접속 부탁드리겠습니다.")
-      router.push("/login")
+      alert("로그아웃 됐습니다. 재접속 부탁드리겠습니다.");
+      router.push("/login");
     };
 
     // 컴포넌트가 마운트될 때 로그인 상태를 확인
@@ -76,6 +76,7 @@ export default {
 </script>
 
 <style scoped>
+/* 헤더 스타일 */
 .header {
   display: flex;
   align-items: center;
@@ -123,5 +124,66 @@ export default {
   font-size: 1rem;
   width: 250px;
   outline: none;
+}
+
+/* 로그인 후 사용자 정보 영역 스타일 */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 환영 메시지 */
+.welcome-message {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* 로그아웃 버튼 스타일 */
+.logout-btn {
+  background-color: #e74c3c; /* 붉은색 */
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #c0392b;
+  transform: scale(1.05);
+}
+
+.logout-btn:focus {
+  outline: none;
+}
+
+/* 로그아웃 버튼 포커스 스타일 */
+.logout-btn:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+}
+
+/* 모바일에서 유저 정보가 아래로 쌓이지 않도록 */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .menu {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .search-bar input {
+    width: 100%;
+  }
+
+  .user-info {
+    margin-top: 10px;
+  }
 }
 </style>

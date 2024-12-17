@@ -115,8 +115,11 @@ export default {
             console.error("Login Error:", error);
           });
     };
+    const signuppage = () => {
+      router.push("/Signup")
+    }
 
-    return { state, submit, kakaoLogin };
+    return { state, submit, kakaoLogin , signuppage};
   },
 };
 </script>

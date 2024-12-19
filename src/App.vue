@@ -5,7 +5,7 @@
 import HomePage from './components/Home/HomePage.vue';
 import Login from './components/Login/login.vue';
 import Signup from "@/components/Signup/signup.vue";
-import Swiper from "./components/Swiper.vue";
+import Swiper from "./components/Swiper/Swiper.vue";
 import Mypage from "@/components/Mypage/mypage.vue";
 export default {
   name: 'App',

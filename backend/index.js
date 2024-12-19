@@ -70,11 +70,11 @@ app.post('/api/login', (req, res) => {
 app.post('/api/signup', (req, res) => {
     console.log("req.body:", res.body);
 
-    const { username, password, email } = req.body;
+    const { username, password, email , phone} = req.body;
 
     // 필수 데이터 확인
-    if (!username || !password || !email) {
-        return res.status(400).json({ message: '아이디, 비밀번호, 이메일을 모두 입력하세요.' });
+    if (!username || !password || !email || !phone) {
+        return res.status(400).json({ message: '아이디, 비밀번호, 이메일, 전화번호를 모두 입력하세요.' });
     }
 
     // 아이디 중복 확인
@@ -90,8 +90,8 @@ app.post('/api/signup', (req, res) => {
         }
 
         // 사용자 정보 삽입
-        const insertQuery = 'INSERT INTO login (username, password, email) VALUES (?, ?, ?)';
-        db.query(insertQuery, [username, password, email], (err, result) => {
+        const insertQuery = 'INSERT INTO login (username, password, email, phone) VALUES (?, ?, ?, ?)';
+        db.query(insertQuery, [username, password, email , phone], (err, result) => {
             if (err) {
                 console.error('DB Insert Error:', err);
                 return res.status(500).json({ message: '회원가입에 실패했습니다. 다시 시도해주세요.' });
@@ -137,22 +137,22 @@ app.get('/api/user', (req, res) => {
 
 //Post /api/update - 사용자 업데이트
 app.post('/api/update', (req, res) => {
-    const { id, username, email, password } = req.body;
-
+    const { id, username, email, phone} = req.body;
+    console.log('Received data:', { username, email, phone, id });
     // 필수 필드가 없는 경우
-    if (!id || !username || !email || !password) {
+    if (!id || !username || !email || !phone) {
         return res.status(400).json({ message: '모든 필드를 입력해주세요.' });
     }
-
+console.log("!!!!!!!")
     // UPDATE 쿼리 작성 (사용자 정보 수정)
     const query = `
         UPDATE login 
-        SET username = ?, email = ?, password = ? 
+        SET username = ?, email = ?, phone = ?
         WHERE id = ?
     `;
 
     // 데이터베이스 쿼리 실행
-    db.query(query, [username, email, password, id], (err, result) => {
+    db.query(query, [username, email, phone, id], (err, result) => {
         if (err) {
             console.error('DB Query Error:', err);
             return res.status(500).json({ message: '서버 오류' });

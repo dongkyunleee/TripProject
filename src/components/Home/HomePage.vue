@@ -40,9 +40,9 @@ import { Swiper, SwiperSlide } from "swiper/vue"; // Swiper 추가
 import { Pagination } from "swiper/modules"; // Swiper 모듈 추가
 import 'swiper/css';
 import 'swiper/css/pagination';
-import DestinationCard from "@/components/DestinationCard.vue";
-import Header from "@/components/Header.vue";
-import Footer from "@/components/Footer.vue";
+import DestinationCard from "@/components/Destination/DestinationCard.vue";
+import Header from "@/components/Header/Header.vue";
+import Footer from "@/components/Footer/Footer.vue";
 import parisImage from "@/assets/image/paris.jpg";
 import newYorkImage from "@/assets/image/NewYork.jpg";
 import { useRouter } from 'vue-router';

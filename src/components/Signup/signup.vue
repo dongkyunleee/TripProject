@@ -7,6 +7,10 @@
         <input type="text" v-model="form.username" class="form-input" required />
       </label>
       <label class="form-label">
+        <span>전화번호</span>
+        <input type="phone" v-model="form.phone" class="form-input" required />
+      </label>
+      <label class="form-label">
         <span>이메일</span>
         <input type="email" v-model="form.email" class="form-input" required />
       </label>
@@ -43,19 +47,24 @@ export default {
   setup() {
     const form = reactive({
       username: "",
+      phone :"",
       email: "",
       password: "",
       confirmPassword: "",
     });
-
+    console.log("formformformform",form)
     const router = useRouter();
 
     const submit = () => {
       if (form.password !== form.confirmPassword) {
         alert("비밀번호가 일치하지 않습니다.");
+        if (form.phone.length > 11) {
+          alert("휴대폰 번호는 11글자 이내로 입력해주세요.");
+          form.phone = form.phone.slice(0, 11); // 11글자 이상이면 잘라내기
+        }
         return;
       }
-      console.log("submitsubmitsubmitsubmit",submit)
+
       axios
           .post("http://localhost:3000/api/signup", form)
           .then((res) => {

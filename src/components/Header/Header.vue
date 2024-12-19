@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <div class="logo">
-      <h1>TravelProject</h1>
+      <button @click="home" class="minimal-heading">야가자</button>
     </div>
     <nav class="menu">
       <router-link to="/home">Home</router-link>
@@ -10,7 +10,8 @@
     </nav>
     <!-- 로그인 후 사용자 정보 표시 -->
     <div v-if="user.isLoggedIn" class="user-info">
-      <span class="welcome-message">Welcome, {{ user.nickname }}!</span>
+      <span class="welcome-message">환영해요 {{ user.nickname }}님</span>
+      <button @click="mypage" class="mypage-btn">마이페이지</button>
       <button @click="logout" class="logout-btn">Logout</button>
     </div>
     <div class="search-bar">
@@ -62,6 +63,15 @@ export default {
       router.push("/login");
     };
 
+    const mypage = () => {
+      router.push("/mypage");
+    };
+
+    const home = () => {
+      // 홈 버튼 클릭 시 페이지를 리프레시합니다.
+      window.location.reload(); // 페이지 리프레시
+    };
+
     // 컴포넌트가 마운트될 때 로그인 상태를 확인
     onMounted(() => {
       checkLoginStatus();
@@ -70,6 +80,8 @@ export default {
     return {
       user,
       logout,
+      mypage,
+      home
     };
   },
 };
@@ -91,10 +103,15 @@ export default {
   height: 70px;
 }
 
-.logo h1 {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-  margin-right: 60px;
+.logo h2 {
+  font-size: 2rem; /* 헤더에 맞는 적당한 크기 */
+  font-weight: bold;
+  color: #ffffff;
+  text-align: left;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  padding: 0;
 }
 
 .menu {
@@ -160,12 +177,6 @@ export default {
   outline: none;
 }
 
-/* 로그아웃 버튼 포커스 스타일 */
-.logout-btn:focus {
-  outline: none;
-  box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
-}
-
 /* 모바일에서 유저 정보가 아래로 쌓이지 않도록 */
 @media (max-width: 768px) {
   .header {
@@ -185,5 +196,31 @@ export default {
   .user-info {
     margin-top: 10px;
   }
+}
+
+/* '야가자' 스타일 */
+.minimal-heading {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 2rem; /* 헤더에 맞는 크기 조정 */
+  font-weight: normal;
+  color: #ecf0f1; /* 밝은 색상 */
+  text-align: left;
+  letter-spacing: 2px;
+  margin: 0;
+  padding: 10px 20px; /* 버튼처럼 보이게 padding 추가 */
+  background-color: #3498db; /* 버튼 색상 */
+  border: none; /* 테두리 없애기 */
+  border-radius: 25px; /* 둥근 버튼 모양 */
+  cursor: pointer; /* 클릭할 수 있는 형태로 바꾸기 */
+  transition: all 0.3s ease; /* 애니메이션 효과 */
+}
+
+.minimal-heading:hover {
+  background-color: #2ecc71; /* 호버 시 색상 변경 */
+  transform: scale(1.05); /* 호버 시 살짝 커지게 */
+}
+
+.minimal-heading:focus {
+  outline: none; /* 포커스 상태에서 테두리 없애기 */
 }
 </style>

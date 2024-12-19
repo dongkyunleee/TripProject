@@ -13,7 +13,7 @@
           readonly
       />
 
-      <label for="nickname" class="form-label">닉네임</label>
+<!--      <label for="nickname" class="form-label">닉네임</label>
       <input
           type="text"
           id="nickname"
@@ -21,7 +21,7 @@
           class="form-input"
           placeholder="닉네임을 입력하세요"
           required
-      />
+      />-->
 
       <label for="email" class="form-label">이메일</label>
       <input
@@ -54,6 +54,7 @@
 <script>
 import { reactive, onMounted } from 'vue';
 import axios from 'axios';
+import router from "@/router/index.js";
 
 export default {
   name: 'UserPage',
@@ -81,6 +82,7 @@ export default {
       })
           .then(response => {
             const data = response.data;
+            userData.id = data.id
             userData.username = data.username;
             userData.nickname = data.nickname;
             userData.email = data.email;
@@ -113,13 +115,9 @@ export default {
           });
     };
 
-    // 폼 취소 처리
+    // 취소 (메인홈으로 이동)
     const cancelForm = () => {
-      userData.username = '';
-      userData.nickname = '';
-      userData.email = '';
-      userData.phone = '';
-      alert('폼이 취소되었습니다.');
+      router.push("/home")
     };
 
     // 컴포넌트가 마운트되었을 때 사용자 정보 가져오기

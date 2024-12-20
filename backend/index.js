@@ -143,7 +143,6 @@ app.post('/api/update', (req, res) => {
     if (!id || !username || !email || !phone) {
         return res.status(400).json({ message: '모든 필드를 입력해주세요.' });
     }
-console.log("!!!!!!!")
     // UPDATE 쿼리 작성 (사용자 정보 수정)
     const query = `
         UPDATE login 
@@ -163,6 +162,35 @@ console.log("!!!!!!!")
         }
 
         res.status(200).json({ message: '사용자 정보가 성공적으로 업데이트되었습니다.' });
+    });
+});
+
+//Post /api/update - 사용자 삭제
+app.post('/api/delete', (req, res) => {
+
+    const token = req.headers.authorization?.split(' ')[1]; // Bearer token
+    // 토큰 정보로 로그인 확인
+    if (!token) {
+        return res.status(401).json({ message: '로그인이 필요합니다.' });
+    }
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        if (err) {
+            return res.status(401).json({ message: '유효하지 않은 토큰입니다.' });
+        }
+
+        const query = 'DELETE FROM login WHERE id'; // 삭제 쿼리
+
+        db.query(query, (err, results) => {
+            if (err) {
+                return res.status(500).json({ message: '서버 오류' });
+            }
+
+            if (results.length === 0) {
+                return res.status(404).json({ message: '사용자를 찾을 수 없습니다.' });
+            }
+
+            res.status(200).json(results[0]); // 사용자 정보 반환
+        });
     });
 });
 

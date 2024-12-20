@@ -116,7 +116,7 @@ export default {
           });
     };
     const signuppage = () => {
-      router.push("/Signup")
+      router.push("/signup")
     }
 
     return { state, submit, kakaoLogin , signuppage};

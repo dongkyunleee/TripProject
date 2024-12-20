@@ -45,6 +45,7 @@
 
       <div class="button-group">
         <button type="submit" class="btn btn-primary">정보 수정</button>
+        <button type="button" @click="btnDelete" class="btn delete">계정 삭제</button>
         <button type="button" @click="cancelForm" class="btn btn-secondary">취소</button>
       </div>
     </form>
@@ -115,6 +116,24 @@ export default {
           });
     };
 
+    const btnDelete = () => {
+      const token = localStorage.getItem('token');
+      console.log("tokentokentoken",token)
+      if (!token) {
+        alert('로그인 정보가 없습니다.');
+        return;
+      }
+
+      axios.post('http://localhost:3000/api/delete', userData, {
+        headers: {Authorization: `Bearer ${token}`}
+      })
+          alert("계정이 삭제 됐습니다. ")
+          router.push("/")
+    }
+
+
+
+
     // 취소 (메인홈으로 이동)
     const cancelForm = () => {
       router.push("/home")
@@ -125,7 +144,7 @@ export default {
       getUserData();
     });
 
-    return {userData, submitForm, cancelForm};
+    return {userData, submitForm, cancelForm, btnDelete};
   }
 };
 </script>

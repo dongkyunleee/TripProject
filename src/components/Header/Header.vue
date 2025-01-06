@@ -7,6 +7,7 @@
       <router-link to="/home">Home</router-link>
       <a href="#">Destinations</a>
       <a href="#">About</a>
+      <a href="board">게시판</a>
     </nav>
     <!-- 로그인 후 사용자 정보 표시 -->
     <div v-if="user.isLoggedIn" class="user-info">
@@ -72,6 +73,10 @@ export default {
       window.location.reload(); // 페이지 리프레시
     };
 
+    const board = () => {
+      router.push("/board");
+    }
+
     // 컴포넌트가 마운트될 때 로그인 상태를 확인
     onMounted(() => {
       checkLoginStatus();
@@ -81,7 +86,8 @@ export default {
       user,
       logout,
       mypage,
-      home
+      home,
+      board
     };
   },
 };
@@ -222,5 +228,30 @@ export default {
 
 .minimal-heading:focus {
   outline: none; /* 포커스 상태에서 테두리 없애기 */
+}
+
+.mypage-btn {
+  background-color: #2ecc71; /* 초록색 배경 */
+  color: #fff;
+  padding: 8px 15px; /* 로그아웃 버튼과 동일한 패딩 */
+  font-size: 1rem; /* 로그아웃 버튼과 동일한 폰트 크기 */
+  border-radius: 25px; /* 둥근 버튼 모양 */
+  border: none; /* 테두리 제거 */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mypage-btn:hover {
+  background-color: #27ae60; /* 호버 시 색상 변화 */
+  transform: scale(1.05); /* 호버 시 살짝 커지게 */
+}
+
+.mypage-btn:active {
+  transform: scale(1); /* 클릭 시 크기 변경 없앰 */
+}
+
+.mypage-btn:focus {
+  outline: none; /* 포커스 테두리 제거 */
+  box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.4); /* 포커스 상태에서 초록색 테두리 */
 }
 </style>

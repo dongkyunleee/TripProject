@@ -5,6 +5,8 @@ import Signup from "@/components/Signup/signup.vue";
 import Swiper from "@/components/Swiper/Swiper.vue";
 import mypage from "@/components/Mypage/mypage.vue";
 import DestinationDetail from "@/components/Destination/DestinationDetail.vue";
+import CreateBoard from "@/components/Board/Createboard.vue";
+import board from "@/components/Board/board.vue";
 const routes = [
     {
         path: '/',
@@ -40,6 +42,17 @@ const routes = [
         path: '/Mypage',
         name: 'mypage',
         component: mypage,
+    },
+    {
+    path: '/CreateBoard',
+    name: 'board',
+    component: CreateBoard,
+},
+
+    {
+        path: '/board',
+        name: 'board',
+        component: board,
     },
 ];
 
